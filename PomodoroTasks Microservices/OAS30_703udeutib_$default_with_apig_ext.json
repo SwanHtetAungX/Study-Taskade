@@ -1,0 +1,164 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "PomodoroTaskPortal_API",
+    "version" : "2023-06-27 05:33:16UTC"
+  },
+  "servers" : [ {
+    "url" : "https://703udeutib.execute-api.us-east-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : ""
+      }
+    }
+  } ],
+  "paths" : {
+    "/pomodoro-tasks/{task_id}/{username}" : {
+      "delete" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for DELETE /pomodoro-tasks/{task_id}/{username}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:pomodoro_task_list_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "task_id",
+        "in" : "path",
+        "description" : "Generated path parameter for task_id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }, {
+        "name" : "username",
+        "in" : "path",
+        "description" : "Generated path parameter for username",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/pomodoro-tasks/{username}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /pomodoro-tasks/{username}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:pomodoro_task_list_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "username",
+        "in" : "path",
+        "description" : "Generated path parameter for username",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/pomodoro-tasks" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /pomodoro-tasks"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:pomodoro_task_list_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/pomodoro-tasks/reorder" : {
+      "put" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for PUT /pomodoro-tasks/reorder"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:pomodoro_task_list_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/pomodoro-tasks/{task_Id}" : {
+      "put" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for PUT /pomodoro-tasks/{task_Id}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:pomodoro_task_list_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "task_Id",
+        "in" : "path",
+        "description" : "Generated path parameter for task_Id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "cognito-auth" : {
+        "type" : "oauth2",
+        "flows" : { },
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "$request.header.Authorization",
+          "jwtConfiguration" : {
+            "audience" : [ "1f0hi61f9c6i13pi8fm8css9ih" ],
+            "issuer" : "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_7mJKXyGpw"
+          },
+          "type" : "jwt"
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}

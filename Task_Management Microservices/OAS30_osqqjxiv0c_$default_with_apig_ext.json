@@ -1,0 +1,173 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "TaskPortal_API",
+    "version" : "2023-06-27 07:04:50UTC"
+  },
+  "servers" : [ {
+    "url" : "https://osqqjxiv0c.execute-api.us-east-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : ""
+      }
+    }
+  } ],
+  "paths" : {
+    "/tasks/{task_id}/{username}" : {
+      "delete" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for DELETE /tasks/{task_id}/{username}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:tasks_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "task_id",
+        "in" : "path",
+        "description" : "Generated path parameter for task_id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      }, {
+        "name" : "username",
+        "in" : "path",
+        "description" : "Generated path parameter for username",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/sorted-tasks/{username}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /sorted-tasks/{username}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:tasks_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "username",
+        "in" : "path",
+        "description" : "Generated path parameter for username",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/tasks/{username}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /tasks/{username}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:tasks_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "username",
+        "in" : "path",
+        "description" : "Generated path parameter for username",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/tasks" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /tasks"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:tasks_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/tasks/{task_id}" : {
+      "put" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for PUT /tasks/{task_id}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:tasks_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "task_id",
+        "in" : "path",
+        "description" : "Generated path parameter for task_id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "cognito-auth" : {
+        "type" : "oauth2",
+        "flows" : { },
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "$request.header.Authorization",
+          "jwtConfiguration" : {
+            "audience" : [ "1f0hi61f9c6i13pi8fm8css9ih" ],
+            "issuer" : "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_7mJKXyGpw"
+          },
+          "type" : "jwt"
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}

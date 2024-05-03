@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTaskade</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.834.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/c40c131336.js" crossorigin="anonymous"></script>
+    <script src="js/user_management.js"></script>
+  
+</head>
+<body>
+    <header>
+        <nav>
+          <div class="logo">
+            <img src="images/logo.png" alt="Logo" height="60px">
+          </div>
+          <ul class="menu">
+            <li class="right"><a href="index.html">Home</a></li>
+            <li class="right"><a href="#">About</a></li>
+            <li class="right dropdown">
+              <a href="#">ProductivityHub<svg class="down-arrow" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M1 4l4 4 4-4"></path></svg></a>
+              <div class="dropdown-content">
+                <a href="pomodoro_timer.html">Pomodoro Timer</a>
+                <a href="#">Find Buddies</a>
+                <a href="task_management.html">Task Management</a>
+                <a href="discussion.html">Online Discussion</a>
+              </div>
+            </li>
+            <li class="right"><a href="https://userportal.auth.us-east-1.amazoncognito.com/login?client_id=1f0hi61f9c6i13pi8fm8css9ih&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1xlpt1oc7so68.cloudfront.net%2F" id="navUser">Login</a></li>
+            <li class="right"><a style="display: none;" id="logOut" type="button" onclick="clearSession() "><span class="fa-sharp fa-solid fa-right-to-bracket"></span> LogOut</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="content">
+        <div>
+            <br>
+            <div class="banner">
+                <h1>Unlock Your Productivity Potential:</h1>
+                
+                <p>The Ultimate Hub for Pomodoro Timers, Task Management,<br> Online Discussions, 
+                    and Finding Like-minded Buddies!</p>
+                    <br>
+                    <a href="#card-container"><button class="get-started-button">Get Started</button></a>
+                    <p style="font-size: 15px;">scroll down for more info</p>
+              </div>
+
+        </div>
+        
+        <img src="images/man-sitting.svg" alt="" class="man-sitting">
+  
+      </div>
+      <div id="card-container">
+        
+        <div class="card">
+          <img src="images/discussion.png">
+          <h2>Online Discussion</h2>
+          <p>Engage in meaningful discussions with like-minded individuals on various topics.</p>
+        </div>
+        <div class="card">
+          <img src="images/findBuddies.png" >
+          <h2>Find Buddies</h2>
+          <p>Connect and collaborate with fellow learners and professionals.</p>
+        </div>
+
+        <a href="task_management.html" class="card-design" style="text-decoration: none;">
+          <div class="card">
+            <img src="images/taskManagement.png">
+            <h2>Task Management</h2>
+            <p>Efficiently manage your tasks, set priorities, and track progress.</p>
+          </div>
+        </a>
+        <a href="pomodoro_timer.html" class="card-design" style="text-decoration: none;">
+          <div class="card">
+            <img src="images/pomodoro.png">
+            <h2>Pomodoro Timer</h2>
+            <p>Study and work with focused time intervals to enhance productivity.</p>
+          </div>
+          </a>
+
+      </div>
+      <script src="js/user_management.js"></script>
+
+     
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/pomodoro_task_management.js"></script>
+  <script src="js/task_management.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.834.0.min.js"></script>
+  <script src="https://kit.fontawesome.com/c40c131336.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+  margin: 0;
+ 
+
+
+
+background: hsla(18, 76%, 85%, 1);
+
+background: radial-gradient(circle, hsla(18, 76%, 85%, 1) 0%, hsla(203, 69%, 84%, 1) 100%);
+
+background: -moz-radial-gradient(circle, hsla(18, 76%, 85%, 1) 0%, hsla(203, 69%, 84%, 1) 100%);
+
+background: -webkit-radial-gradient(circle, hsla(18, 76%, 85%, 1) 0%, hsla(203, 69%, 84%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F6CFBE", endColorstr="#B9DCF2", GradientType=1 );
+  font-family: Arial, sans-serif;
+}
+
+.timer-container {
+    margin:50px 450px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+background: linear-gradient(135deg, rgba(255,255,255,0.1),rgba(255,255,255,0));
+backdrop-filter: blur(10px);
+border-radius: 16px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.timer {
+  font-size: 48px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+}
+.time {
+  padding: 0 10px;
+}
+.current-session {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+timer-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer-buttons button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.timer-buttons button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.navigation-buttons {
+ margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.navigation-buttons button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.navigation-buttons button:hover {
+  background-color: #333;
+  color: #fff;
+}
+.task-list label{
+    color:#333;
+}
+.task-list i.fa-pen {
+    color: #333;
+  margin-right: 30px;}
+
+.task-list i.fa-trash {
+    color: #333;
+  margin-right: 20px;}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ 
+}
+
+/* Close button (X) */
+.close-button {
+  color: #333;
+  cursor: pointer;
+  font-size: 24px;
+  float: right;
+  font-weight: bold;
+}
+
+.close-button:hover {
+  color: #777;
+}
+.close-button-1 {
+  color: #333;
+  cursor: pointer;
+  font-size: 24px;
+  float: right;
+  font-weight: bold;
+}
+
+.close-button-1:hover {
+  color: #777;
+}
+
+/* Task name input */
+#taskNameInput {
+  width: 100%;
+  padding: 10px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  max-width: 100%; 
+}
+#taskNameUpdate {
+  width: 100%;
+  padding: 10px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  max-width: 100%; 
+}
+/* Modal buttons */
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.modal-buttons button:hover {
+  background-color: #555;
+}
+
+  </style>
+</head>
+<body onload="getPomodoroTask();setNav()">
+    <header>
+        <nav>
+          <div class="logo">
+            <img src="images/logo.png" alt="Logo" height="60px" />
+          </div>
+          <ul class="menu">
+            <li class="right"><a href="index.html">Home</a></li>
+            <li class="right"><a href="#">About</a></li>
+            <li class="right dropdown">
+              <a href="#"
+                >ProductivityHub<svg
+                  class="down-arrow"
+                  viewBox="0 0 10 10"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M1 4l4 4 4-4"></path></svg
+              ></a>
+              <div class="dropdown-content">
+                <a href="pomodoro_timer.html">Pomodoro Timer</a>
+                <a href="#">Find Buddies</a>
+                <a href="task_management.html">Task Management</a>
+                <a href="discussion.html">Online Discussion</a>
+              </div>
+            </li>
+            <li class="right">
+              <a
+                href="https://userportal.auth.us-east-1.amazoncognito.com/login?client_id=1f0hi61f9c6i13pi8fm8css9ih&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1xlpt1oc7so68.cloudfront.net%2F"
+                id="navUser"
+                >Login</a
+              >
+            </li>
+            <li class="right">
+              <a
+                style="display: none"
+                id="logOut"
+                type="button"
+                onclick="clearSession() "
+                ><span class="fa-sharp fa-solid fa-right-to-bracket"></span>
+                LogOut</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <h2 style="text-align: center;margin-top:20px;">Pomodoro Timer</h2>
+      <div class="pomodoro">
+        <div class="navigation-buttons">
+            <button onclick="setSession('pomodoro')">Pomodoro</button>
+            <button onclick="setSession('shortBreak')">Short Break</button>
+            <button onclick="setSession('longBreak')">Long Break</button>
+          </div>
+        <div class="timer-container">
+        <div class="current-session">Pomodoro</div>
+        <br><br>
+          <div class="timer">
+            <div class="time" id="minutes">25</div>
+            <div class="time">:</div>
+            <div class="time" id="seconds">00</div>
+          </div>
+          <br><br>
+          <div class="timer-buttons">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="stopTimer()">Stop</button>
+          </div>
+          <p id="task-doing" style="opacity: 0.4;">#Doing - </p>
+          
+        </div>
+      </div>
+
+      <ul>
+        <li class="task-list-1" style="border: 2px solid #333; background-color:#fff;margin:50px 450px;">
+            <label for="task1" style="margin-left: 36px;color:black">Task</label>
+            <i class="fas fa-plus" style="margin-right: 20px;"></i>
+          </li>
+      </ul>
+
+      <div id="taskListContainer">
+        <ul id="taskList" style="margin:50px 350px;"></ul>
+      </div>
+      <!-- Modal for adding a new task -->
+  <div id="addTaskModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 style="text-align: center;margin-top:10px;">Add New Task</h2>
+      <input type="text" id="taskNameInput" placeholder="Enter task name">
+      <div class="modal-buttons">
+        <button id="saveTaskButton">Save</button>
+        <button class="cancel-button" id="cancelTaskButton">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editTaskModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button-1">&times;</span>
+      <h2 style="text-align: center;margin-top:10px;">Edit Task</h2>
+      <input type="text" id="taskNameUpdate" placeholder="Enter task name">
+      <div class="modal-buttons">
+        <button id="updateTaskButton">Update</button>
+        <button class="cancel-button" id="cancelTaskButton">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script src="js/countdown.js"></script>
+</body>
+</html>

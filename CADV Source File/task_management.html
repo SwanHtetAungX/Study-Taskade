@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.834.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/c40c131336.js" crossorigin="anonymous"></script>
+    <script src="js/task_management.js"></script>
+    <script src="js/user_management.js"></script>
+    <script>
+
+document.addEventListener("DOMContentLoaded",function(){
+var customButtonAddTask=document.getElementById("customButtonAddTask");
+
+var modal = document.getElementById("modal");
+
+var closeButton = document.querySelector(".close");
+var cancelButton = document.querySelector(".cancel-button");
+var taskForm = document.getElementById("taskForm");
+
+function openModal() {
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    modal.style.display = "none";
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+    var taskName = document.getElementById("taskName").value;
+    var description = document.getElementById("description").value;
+    var resources = document.getElementById("resources").value;
+    var deadline = document.getElementById("deadline").value;
+    var priority = document.querySelector('input[name="priority"]:checked').value;
+    console.log("Task Name: " + taskName);
+    console.log("Description: " + description);
+    console.log("Resources: " + resources);
+    console.log("Deadline: " + deadline);
+    console.log("Priority: " + priority);
+    addTask(taskName,description,resources,deadline,priority);
+    closeModal();
+}
+customButtonAddTask.addEventListener("click",function(){
+    var accessToken=sessionStorage.getItem('accessToken');
+    if(accessToken!=null){
+    openModal();}
+    else{
+        alert('Please Login Or Sign Up first')
+    }
+})
+closeButton.addEventListener("click", closeModal);
+cancelButton.addEventListener("click", closeModal);
+taskForm.addEventListener("submit", handleFormSubmit);
+
+window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+})
+        function toggleDropdown() {
+  var dropdown = document.getElementById("sortDropdown");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+function sortByDate() {
+
+  toggleDropdown();
+  console.log("Sorting by Date...");
+}
+
+function sortByPriority() {
+
+  toggleDropdown();
+  console.log("Sorting by Priority...");
+}
+
+    </script>
+    
+    
+</head>
+<body onload="getTask();setNav()">
+    <header>
+        <nav>
+          <div class="logo">
+            <img src="images/logo.png" alt="Logo" height="60px">
+          </div>
+          <ul class="menu">
+            <li class="right"><a href="index.html">Home</a></li>
+            <li class="right"><a href="#">About</a></li>
+            <li class="right dropdown">
+              <a href="#">ProductivityHub<svg class="down-arrow" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M1 4l4 4 4-4"></path></svg></a>
+              <div class="dropdown-content">
+                <a href="pomodoro_timer.html">Pomodoro Timer</a>
+                <a href="#">Find Buddies</a>
+                <a href="task_management.html">Task Management</a>
+                <a href="discussion.html">Online Discussion</a>
+              </div>
+            </li>
+            <li class="right"><a href="https://userportal.auth.us-east-1.amazoncognito.com/login?client_id=1f0hi61f9c6i13pi8fm8css9ih&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1xlpt1oc7so68.cloudfront.net%2F" id="navUser">Login</a></li>
+            <li class="right"><a style="display: none;" id="logOut" type="button" onclick="clearSession() "><span class="fa-sharp fa-solid fa-right-to-bracket"></span> LogOut</a></li>
+          </ul>
+        </nav>
+    </header>
+    <h3 style="text-align: center;color: white;">Task Manager</h3>
+    <br>
+    <div class="button-container">
+        <button class="custom-button">
+            <i class="fas fa-spinner"></i> 
+            <p style="font-weight: bold;color: white;margin-left: 10px;margin-right: 3px;">Progress</p>
+            <p id="percentage" style="color: #9C9B9A;">00%</p>
+        </button>
+
+        <button class="custom-button-add-task" id="customButtonAddTask">
+            <i class="fas fa-plus"></i> 
+            <p style="font-weight: bold;color: #159D94;margin-left: 10px;margin-right: 3px;">Add Task</p>   
+        </button>
+        <div class="custom-dropdown">
+            <button class="custom-button-view" onclick="toggleDropdown()">
+              <i class="fas fa-sliders-h"></i> 
+              <p style="font-weight: bold; color: #159D94; margin-left: 10px; margin-right: 3px;">Sort</p>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="dropdown-content-1" id="sortDropdown">
+              <a href="#" onclick="getTask()">Sort by Default</a>
+              <a href="#" onclick="getSortedTask('priority', 'DESC')">Sort by Priority</a>
+              <a href="#" onclick="getSortedTask('due_date', 'ASC')">Sort by Deadline</a>
+            </div>
+          </div>
+
+    </div>
+    
+        
+      </div>
+      <br><br><br><br>
+      <ul>
+        <li class="task-list" style="border: #159D94 solid 1px;">
+            <label for="task1" style="margin-left: 36px;">Task</label>
+            <label for="task1" style="margin-left: 550px;">Priority</label>
+            <label for="task1" style="margin-right: 40px;">Deadline</label>
+          </li>
+      </ul>
+      <br>
+      <ul id="taskList">  
+      </ul>
+      <!-- Task Details -->
+      <div id="modal" class="modal">
+        <div class="modal-content" style="background-color: #2c323d;padding-right: 20px;">
+            <span class="close">&times;</span>
+            
+            <form id="taskForm" style="margin-right:50px;">
+                <label for="taskName" style="color:white;">Task Name:</label>
+                <input type="text" id="taskName" required>
+                <label for="description">Description:</label>
+                <textarea id="description" required></textarea>
+                <label for="resources">Resources:</label>
+                <textarea id="resources" required></textarea>
+                <label for="deadline">Deadline:</label>
+                <input type="date" id="deadline" required>
+            
+                <label class="priority-label">Priority:</label>
+            <div class="priority-buttons">
+            <label class="priority-button high-priority">
+            <input type="radio" name="priority" value="High" required>
+            <i class="fas fa-arrow-up"></i>
+                High
+            </label>
+            <label class="priority-button medium-priority">
+            <input type="radio" name="priority" value="Medium">
+            <i class="fas fa-arrow-right"></i>
+            Medium
+        </label>
+        <label class="priority-button low-priority">
+        <input type="radio" name="priority" value="Low">
+        <i class="fas fa-arrow-down"></i>
+        Low
+    </label>
+    </div><br>
+
+                <div class="buttons">
+                    <button type="submit">Add Task</button>
+                    <button type="button" class="cancel-button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+      
+
+                             <!-- Task Details -->
+      
+ 
+    <div id="modal-1" class="modal-1">
+        <div class="modal-content" style="background-color: #2c323d;padding-right: 20px;">
+            <span class="close-1">&times;</span>
+            
+            <form id="taskForm-1" style="margin-right:50px;">
+                <label for="taskName-1" style="color:white;">Task Name:</label>
+                <input type="text" id="taskName-1" required>
+                <label for="description-1">Description:</label>
+                <textarea id="description-1" required></textarea>
+                <label for="resources-1">Resources:</label>
+                <textarea id="resources-1" required></textarea>
+                <label for="deadline-1">Deadline:</label>
+                <input type="date" id="deadline-1" required>
+            
+                <label class="priority-label">Priority:</label>
+            <div class="priority-buttons">
+            <label class="priority-button high-priority">
+            <input type="radio" name="priority-1" value="High" required>
+            <i class="fas fa-arrow-up"></i>
+                High
+            </label>
+            <label class="priority-button medium-priority">
+            <input type="radio" name="priority-1" value="Medium">
+            <i class="fas fa-arrow-right"></i>
+            Medium
+        </label>
+        <label class="priority-button low-priority">
+        <input type="radio" name="priority-1" value="Low">
+        <i class="fas fa-arrow-down"></i>
+        Low
+    </label>
+    </div><br>
+
+                <div class="buttons">
+                    <button type="submit">Update</button>
+                    <button type="button" class="cancel-button-1">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

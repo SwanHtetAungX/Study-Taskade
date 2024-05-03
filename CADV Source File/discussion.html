@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script  src="js/discussion_post.js"></script>
+    <script src="js/task_management.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c40c131336.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1e2331, #353c4c);
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.discussion-post-container {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 40px;
+    margin: 20px 100px;
+}
+
+
+
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #0083ff;
+    margin-right: 10px;
+}
+
+.post-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #ffffff;
+}
+
+.post-username,
+.post-date {
+    font-size: 14px;
+    color: #aaaaaa;
+    margin: 5px;
+}
+
+.post-content-text {
+    margin: 5px 0;
+    color: #ffffff;
+}
+
+.post-image {
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+.comment-icon {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #aaaaaa;
+    cursor: pointer;
+}
+
+.divider {
+    border-bottom: 1px solid #dadde1;
+    margin: 10px 0;
+}
+
+.like-comment-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.like-comment-icons {
+    display: flex;
+    align-items: center;
+}
+
+.like-comment-icons i {
+    font-size: 16px;
+    color: #aaaaaa;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.like-comment-text {
+    font-size: 14px;
+    color: #aaaaaa;
+    margin: 0;
+}
+
+.search-container input[type='text']{
+    border: solid 1px #0083ff;
+    margin:30px 500px;
+    border-radius: 50px;
+}
+.search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 45px 10px 15px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            width: 300px;
+            background-position: 10px center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-button {
+            z-index: 2;
+            position: absolute;
+            right: 510px;
+            top: 35px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: none;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-icon {
+            font-size: 20px;
+            color: #0083ff;
+        }
+.ask-question-btn {
+  padding: 10px 20px;
+  margin-left: 400px;
+
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(to right, #0083ff, #00b5ff);
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ask-question-btn:hover {
+  background: linear-gradient(to right, #00b5ff, #0083ff);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+ background-color: #393F4D;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+}
+
+.close-btn {
+  color: #65676b;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+.user-profile{
+    display: flex;
+}
+.user-profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  margin-bottom: 30px;
+  border: solid 1px #0083ff;
+}
+
+.user-profile .username {
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+  margin-top: 22px;
+  margin-left: 10px;
+}
+
+.post-inputs input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2F3543;
+ box-sizing: border-box;
+  max-width: 100%; 
+
+}
+.post-inputs textarea {
+font-family: 'Poppins';
+  width: 100%;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #2F3543;
+ box-sizing: border-box;
+  max-width: 100%; 
+color: #fff;
+
+}
+
+.file-upload {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.file-upload input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-icon {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #2F3543;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.selectedFileName {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.post-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cancel-btn,
+.post-btn {
+  padding: 10px 15px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.update-btn {
+  padding: 10px 15px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#updateCommentBtn {
+  padding: 10px 15px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cancel-btn {
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.post-btn {
+  background-image: linear-gradient(to right, #007bff, #00b5ff);
+  color: #fff;
+  padding: 10px 20px ;
+}
+.update-btn {
+  background-image: linear-gradient(to right, #007bff, #00b5ff);
+  color: #fff;
+  padding: 10px 20px ;
+}
+#updateCommentBtn {
+  background-image: linear-gradient(to right, #007bff, #00b5ff);
+  color: #fff;
+  padding: 10px 20px ;
+}
+#discussion-post-header{
+    display: flex;
+
+    
+}
+.custom-dropdown-1 {
+  position: relative;
+  display: inline-block;
+  
+ 
+}
+
+#dropdown-menu-post{
+    background-color: #393D4D;
+}
+.dropdown-option{
+    color: #fff;
+    background-color: #303645;
+    width: 80px;
+    margin: 0;
+    z-index: 5;
+    padding: 10px;
+
+}
+.dropdown-menu-post {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  background-color: none;
+  z-index: 1;
+  left: 250px;
+}
+.dropdown-option i{
+    color: #fff;
+}
+.dropdown-option:hover{
+    background-color: #65676b;
+
+}
+textarea { resize: none; }
+.add-comment::placeholder{
+    text-align: center;
+}
+    </style>
+</head>
+<body onload="getAllDiscussionPosts();setNav()">
+    <header>
+        <nav>
+          <div class="logo">
+            <img src="images/logo.png" alt="Logo" height="60px">
+          </div>
+          <ul class="menu">
+            <li class="right"><a href="index.html">Home</a></li>
+            <li class="right"><a href="#">About</a></li>
+            <li class="right dropdown">
+              <a href="#">ProductivityHub<svg class="down-arrow" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M1 4l4 4 4-4"></path></svg></a>
+              <div class="dropdown-content">
+                <a href="pomodoro_timer.html">Pomodoro Timer</a>
+                <a href="#">Find Buddies</a>
+                <a href="task_management.html">Task Management</a>
+                <a href="discussion.html">Online Discussion</a>
+              </div>
+            </li>
+            <li class="right"><a href="https://userportal.auth.us-east-1.amazoncognito.com/login?client_id=1f0hi61f9c6i13pi8fm8css9ih&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd1xlpt1oc7so68.cloudfront.net%2F" id="navUser">Login</a></li>
+            <li class="right"><a style="display: none;" id="logOut" type="button" onclick="clearSession() "><span class="fa-sharp fa-solid fa-right-to-bracket"></span> LogOut</a></li>
+          </ul>
+        </nav>
+      </header>
+      <h3 style="text-align: center;margin-top: 30px;margin-left: 500px;">Discussion Forum
+        <button class="ask-question-btn" onclick="openAskQuestionModal()">Ask A Question</button>
+
+    </h3>
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search Discussion Post" oninput="liveSearchDiscussionPosts()">
+        <button class="search-button">
+            <i class="search-icon fas fa-search"></i>
+        </button>
+    </div>
+      <div class="container" id="discussionContainer">
+    </div>
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <div class="user-profile">
+            <img src="https://image-upload-for-profile-pic.s3.amazonaws.com/default-profile.jpeg" alt="Profile Picture" id="discussionPostProfile">
+            <p class="username" id="uploadPost-username">Username</p>
+          </div>
+          <div class="post-inputs">
+            <input type="text" id="postTitle" placeholder="Title">
+            <textarea id="postDescription" placeholder="Description" rows="5"></textarea>
+            <div class="file-upload">
+              <input type="file" id="imagePostInput" accept="image/*">
+              <label for="imageInput" class="upload-icon">
+                <i class="fas fa-image" style="color: #0083ff;"></i> Attach Image
+              </label>
+              <span id="selectedFileName"></span>
+            </div>
+          </div>
+          <div class="post-buttons">
+            <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            <button class="post-btn" onclick="addDiscussionPosts()">Post</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="editPostModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeEditModal()">&times;</span>
+          <div class="user-profile">
+            <img src="https://image-upload-for-profile-pic.s3.amazonaws.com/default-profile.jpeg" alt="Profile Picture" id="discussionEditPostProfile">
+            <p class="username" id="editPost-username">Username</p>
+          </div>
+          <div class="post-inputs">
+            <input type="text" id="editPostTitle" placeholder="Title">
+            <textarea id="editPostDescription" placeholder="Description" rows="5"></textarea>
+            <div class="file-upload">
+              <input type="file" id="imageEditPostInput" accept="image/*">
+              <label for="imageEditInput" class="upload-icon">
+                <i class="fas fa-image" style="color: #0083ff;"></i> Change Image
+              </label>
+              <span id="selectedFileNameEdit"></span>
+            </div>
+          </div>
+          <div class="post-buttons">
+            <button class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+            <button class="update-btn">Update</button>
+          </div>
+        </div>
+      </div>
+      <div id="editCommentModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeEditComment()">&times;</span>
+          <div class="user-profile">
+            <img src="https://image-upload-for-profile-pic.s3.amazonaws.com/default-profile.jpeg" alt="Profile Picture" id="discussionEditCommentProfile">
+            <p class="username" id="editComment-username">Username</p>
+          </div>
+          <div class="post-inputs">
+            <textarea id="editComment" placeholder="Description" rows="5"></textarea>
+          </div>
+          <div class="post-buttons">
+            <button class="cancel-btn" onclick="closeEditComment()">Cancel</button>
+            <button id="updateCommentBtn">Update</button>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
+
+
+

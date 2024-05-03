@@ -1,0 +1,263 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "discussion_post_http_api",
+    "version" : "2023-06-27 01:35:11UTC"
+  },
+  "servers" : [ {
+    "url" : "https://4623wk6kol.execute-api.us-east-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : ""
+      }
+    }
+  } ],
+  "paths" : {
+    "/discussion-posts/comments/{comment_id}" : {
+      "put" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for PUT /discussion-posts/comments/{comment_id}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "delete" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for DELETE /discussion-posts/comments/{comment_id}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "comment_id",
+        "in" : "path",
+        "description" : "Generated path parameter for comment_id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/discussion-posts/{post_id}" : {
+      "put" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for PUT /discussion-posts/{post_id}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "delete" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for DELETE /discussion-posts/{post_id}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "post_id",
+        "in" : "path",
+        "description" : "Generated path parameter for post_id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/discussion-posts" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /discussion-posts"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /discussion-posts"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/discussion-posts/search" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /discussion-posts/search"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/discussion-posts/{post_id}/comments" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /discussion-posts/{post_id}/comments"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "post_id",
+        "in" : "path",
+        "description" : "Generated path parameter for post_id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/discussion-posts/{username}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /discussion-posts/{username}"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "username",
+        "in" : "path",
+        "description" : "Generated path parameter for username",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/discussion-post/{post-id}/comments" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /discussion-post/{post-id}/comments"
+          }
+        },
+        "security" : [ {
+          "cognito-auth" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:702194869456:function:discussion_posts_crud/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "post-id",
+        "in" : "path",
+        "description" : "Generated path parameter for post-id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "cognito-auth" : {
+        "type" : "oauth2",
+        "flows" : { },
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "$request.header.Authorization",
+          "jwtConfiguration" : {
+            "audience" : [ "1f0hi61f9c6i13pi8fm8css9ih" ],
+            "issuer" : "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_7mJKXyGpw"
+          },
+          "type" : "jwt"
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}
